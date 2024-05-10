@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * navbar toggle
+ * Navbar toggle
  */
 
 const overlay = document.querySelector("[data-overlay]");
@@ -24,23 +24,29 @@ const navToggleEvent = function (elem) {
 navToggleEvent(navElemArr);
 navToggleEvent(navLinks);
 
-
-
 /**
- * header sticky & go to top
+ * Header hide on scroll down, show on scroll up & go to top
  */
 
 const header = document.querySelector("[data-header]");
 const goTopBtn = document.querySelector("[data-go-top]");
+let lastScrollTop = 0;
 
 window.addEventListener("scroll", function () {
+  let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-  if (window.scrollY >= 200) {
-    header.classList.add("active");
-    goTopBtn.classList.add("active");
-  } else {
+  if (scrollTop > lastScrollTop) { // Scroll down
     header.classList.remove("active");
     goTopBtn.classList.remove("active");
+  } else { // Scroll up
+    header.classList.add("active");
+    goTopBtn.classList.add("active");
   }
-
+  
+  lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
 });
+
+// Function to toggle scrolling of the header
+function toggleHeaderScrolling() {
+  isHeaderScrollingEnabled = !isHeaderScrollingEnabled;
+}
